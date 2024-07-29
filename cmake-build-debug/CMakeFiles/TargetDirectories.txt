@@ -1,0 +1,2 @@
+D:/MicroController/Arduino/ardiuno/ST7735sDemo/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/MicroController/Arduino/ardiuno/ST7735sDemo/cmake-build-debug/CMakeFiles/rebuild_cache.dir

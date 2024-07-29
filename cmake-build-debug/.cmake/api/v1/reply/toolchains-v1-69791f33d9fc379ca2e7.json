@@ -1,0 +1,133 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0/include",
+						"D:/download/mingw/MinGW/include",
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0/include-fixed",
+						"D:/download/mingw/MinGW/mingw32/include"
+					],
+					"linkDirectories" : 
+					[
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0",
+						"D:/download/mingw/MinGW/lib/gcc",
+						"D:/download/mingw/MinGW/mingw32/lib",
+						"D:/download/mingw/MinGW/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex"
+					]
+				},
+				"path" : "D:/download/mingw/MinGW/bin/gcc.exe",
+				"version" : "6.3.0"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0/include/c++",
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0/include/c++/mingw32",
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0/include/c++/backward",
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0/include",
+						"D:/download/mingw/MinGW/include",
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0/include-fixed",
+						"D:/download/mingw/MinGW/mingw32/include"
+					],
+					"linkDirectories" : 
+					[
+						"D:/download/mingw/MinGW/lib/gcc/mingw32/6.3.0",
+						"D:/download/mingw/MinGW/lib/gcc",
+						"D:/download/mingw/MinGW/mingw32/lib",
+						"D:/download/mingw/MinGW/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"mingw32",
+						"gcc_s",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"mingw32",
+						"gcc_s",
+						"gcc",
+						"moldname",
+						"mingwex"
+					]
+				},
+				"path" : "D:/download/mingw/MinGW/bin/g++.exe",
+				"version" : "6.3.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"mm",
+				"mpp",
+				"CPP",
+				"ixx",
+				"cppm"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"implicit" : {},
+				"path" : "D:/jetbrains/CLion 2023.2.2/bin/mingw/bin/windres.exe"
+			},
+			"language" : "RC",
+			"sourceFileExtensions" : 
+			[
+				"rc",
+				"RC"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}
