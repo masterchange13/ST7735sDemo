@@ -47,8 +47,19 @@ void loop() {
             displayImage0();
             break;
         case 1:
+            displayImage1();
+            break;
+        case 2:
+            displayImage2();
+            break;
+        case 3:
+            displayImage3();
             break;
         default:
             break;
     }
+
+    delay(2000);
+
+    currentPage = (currentPage + 1) % 4;
 }

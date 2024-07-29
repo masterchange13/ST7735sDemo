@@ -7,7 +7,10 @@
 #include <Adafruit_ST7735.h>
 #include <SPI.h>
 #include "../img/zyq/img_zyq.h"
-#include "../img/llx/llx.h"
+#include "../img/page0/llx.h"
+#include "../img/page1/page1.h"
+#include "../img/page2/page2.h"
+#include "../img/page3/page3.h"
 
 // 定义引脚
 #define TFT_CS     15
@@ -74,13 +77,32 @@ void displayImage0(){
 }
 
 void displayImage1(){
+    // 设置光标到左上角
+    tft.setAddrWindow(0, 0, 128, 160);
 
+    // 将图片数据写入屏幕
+    for (uint16_t i = 0; i < imageSize; i++) {
+        tft.pushColor(image_page1[i]);
+    }
 }
 
 void displayImage2(){
+    // 设置光标到左上角
+    tft.setAddrWindow(0, 0, 128, 160);
 
+    // 将图片数据写入屏幕
+    for (uint16_t i = 0; i < imageSize; i++) {
+        tft.pushColor(image_page2[i]);
+    }
 }
 
-void displayImage3(){
 
+void displayImage3(){
+    // 设置光标到左上角
+    tft.setAddrWindow(0, 0, 128, 160);
+
+    // 将图片数据写入屏幕
+    for (uint16_t i = 0; i < imageSize; i++) {
+        tft.pushColor(image_page3[i]);
+    }
 }
