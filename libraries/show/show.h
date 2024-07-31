@@ -14,5 +14,6 @@ void displayImage0();
 void displayImage1();
 void displayImage2();
 void displayImage3();
+void displayImageTest();
 
 #endif //ST7735SDEMO_SHOW_H

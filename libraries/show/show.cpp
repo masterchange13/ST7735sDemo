@@ -11,6 +11,13 @@
 #include "../img/page1/page1.h"
 #include "../img/page2/page2.h"
 #include "../img/page3/page3.h"
+#include "../img/page_test/page_test.h"
+
+// 宇航员
+#include "../img/yuhangyuan/yuhangyuan0.h"
+
+// 天气
+#include "../img/wea/lei_black.h"
 
 // 定义引脚
 #define TFT_CS     15
@@ -46,6 +53,22 @@ void drawWeatherPage(){
 //    // 绘制天气相关内容
 //    drawWeatherContent();
 }
+
+// 刷新局部区域函数
+void pushImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint16_t *image) {
+    // 设置地址窗口
+    tft.setAddrWindow(x, y, x + w - 1, y + h - 1);
+
+    // 开始写入数据
+    tft.startWrite();
+    for (uint16_t j = 0; j < h; j++) {
+        for (uint16_t i = 0; i < w; i++) {
+            tft.writePixel(x + i, y + j, image[j * w + i]);
+        }
+    }
+    tft.endWrite();
+}
+
 
 uint16_t imageSize = 128 * 160;
 void displayImageZyq() {
@@ -94,6 +117,7 @@ void displayImage2(){
     for (uint16_t i = 0; i < imageSize; i++) {
         tft.pushColor(image_page2[i]);
     }
+    pushImage(30, 30, 60, 100, image_page_test);
 }
 
 
@@ -106,3 +130,12 @@ void displayImage3(){
         tft.pushColor(image_page3[i]);
     }
 }
+
+void displayImageTest(){
+    tft.fillScreen(ST77XX_BLACK);
+
+    pushImage(30, 30, 60, 100, image_page_test);
+
+
+}
+

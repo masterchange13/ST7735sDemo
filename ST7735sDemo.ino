@@ -36,6 +36,8 @@ void setup() {
     displayImageZyq();
     delay(100);
 
+    // 测试样例，用完即删
+//    displayImageTest();
 }
 
 
@@ -58,6 +60,7 @@ void loop() {
         default:
             break;
     }
+    Serial.println(currentPage);
 
     delay(2000);
 
