@@ -22,6 +22,9 @@
 #include "../net/net.h"
 #include "../common/common.h"
 
+#include "../img/temperature/temperature_image.h"
+#include "../img/CZ/CZ.h"
+
 // 定义引脚
 #define TFT_CS     15
 #define TFT_RST    4
@@ -50,7 +53,7 @@ uint16_t width = 128;
 //    int day;
 //} TimeData;
 // 创建TimeData并初始化
-TimeData timeData = {14, 27, 0, 0 , 0};
+TimeData timeData = {18, 17, 0, 0 , 0};
 
 WeatherData weatherData = {"CZ", "sun", "30", "n 3"};
 
@@ -151,19 +154,20 @@ void updateTimeDisplay() {
 void drawDateWeek(){
     tft.setTextColor(ST7735_YELLOW);
     tft.setTextSize(2);
-    tft.setCursor(10, 30); // 改变 y 坐标以避免重叠
-    tft.print(weatherData.location);
+//    tft.setCursor(10, 30); // 改变 y 坐标以避免重叠
+//    tft.print(weatherData.location);
+    pushImage(10, 30, 30, 30, image_CZ);
 
     // 画出阴天图像
     pushImage(70, 30, 50, 50, lei_black);
 
-    tft.setTextSize(1.5);
+    tft.setTextSize(2);
+//    tft.setCursor(10, 70); // 改变 y 坐标以避免重叠
+//    tft.print(weatherData.wind);
     tft.setCursor(10, 70); // 改变 y 坐标以避免重叠
-    tft.print(weatherData.wind);
-
-    tft.setTextSize(1.5);
-    tft.setCursor(50, 70); // 改变 y 坐标以避免重叠
     tft.print(weatherData.temperature);
+    // 绘制摄氏度图表
+    pushImage(32, 65, 20, 20, image_temperature);
 
     updateTimeDisplay();
 
