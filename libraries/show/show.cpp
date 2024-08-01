@@ -27,31 +27,23 @@
 // 创建 ST7735S 对象
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
+uint16_t height = 160;
+uint16_t width = 128;
+
+typedef struct {
+    String location;
+    String weather;
+    String temperature;
+    String wind;
+} WeatherData;
+
+WeatherData weatherData;
+
 // 初始化屏幕
 void initTft(){
     // 初始化 ST7735 屏幕
     tft.initR(INITR_BLACKTAB);
     tft.fillScreen(ST77XX_BLACK);
-}
-
-// 绘制实况天气页面
-void drawWeatherPage(){
-////    清空屏幕 tftUtil
-//    reflashTFT();
-////    绘制标题 task
-//    drawTitle();
-////    绘制时间、日期、星期
-//    drawDateWeek();
-//    //绘制温湿度图标
-//    if(backColor == BACK_BLACK){
-//        tft.pushImage(7,235,40,40,temperature_black);
-//        tft.pushImage(5,275,40,40,humidity_black);
-//    }else{
-//        tft.pushImage(7,235,40,40,temperature);
-//        tft.pushImage(5,275,40,40,humidity);
-//    }
-//    // 绘制天气相关内容
-//    drawWeatherContent();
 }
 
 // 刷新局部区域函数
@@ -92,12 +84,45 @@ void reflashTFT(){
     }
 }
 
-void drawDateWeek(){
-    tft.setTextColor(ST7735_BLUE);
-    tft.setTextSize(2);
-    tft.setCursor(12,0);
-    tft.print("2024-07-28");
+void initWeatherData(){
+    weatherData.location = "CZ";
+    weatherData.weather = "Clod";
+    weatherData.temperature = "28℃";
+    weatherData.wind = "earth-south 3";
 }
+
+void drawTitle(){
+    tft.setTextColor(ST7735_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(0, 0);
+    tft.print("  welcome");
+
+    tft.fillRect(0, 20, tft.width(), 5, ST7735_WHITE);
+}
+
+
+void drawDateWeek(){
+    tft.setTextColor(ST7735_YELLOW);
+    tft.setTextSize(1);
+    tft.setCursor(0, 30); // 改变 y 坐标以避免重叠
+    tft.print(weatherData.location);
+
+    tft.setTextColor(ST7735_WHITE);
+    tft.setCursor(40, 30); // 改变 y 坐标以避免重叠
+    tft.print(weatherData.weather);
+
+    tft.setCursor(20, 50); // 改变 y 坐标以避免重叠
+    tft.print(weatherData.wind);
+
+    tft.setCursor(0, 70); // 改变 y 坐标以避免重叠
+    tft.setTextSize(3);
+    tft.print("10:00");
+
+    tft.setCursor(0, 100); // 改变 y 坐标以避免重叠
+    tft.setTextSize(2);
+    tft.print("8/24  Thu");
+}
+
 
 void displayImage0(){
     clearTft();
@@ -155,6 +180,27 @@ void displayImageTest(){
 }
 
 void displayIimeTest(int time){
+    initWeatherData();
+    drawTitle();
     drawDateWeek();
 }
 
+// 绘制实况天气页面
+void drawWeatherPage(){
+//    //清空屏幕
+//    reflashTFT();
+//    //绘制标题
+//    drawTitle();
+//    //绘制时间、日期、星期
+//    drawDateWeek();
+//    //绘制温湿度图标
+//    if(backColor == BACK_BLACK){
+//        tft.pushImage(7,235,40,40,temperature_black);
+//        tft.pushImage(5,275,40,40,humidity_black);
+//    }else{
+//        tft.pushImage(7,235,40,40,temperature);
+//        tft.pushImage(5,275,40,40,humidity);
+//    }
+//    // 绘制天气相关内容
+//    drawWeatherContent();
+}
