@@ -23,7 +23,9 @@
 //Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
 uint8_t currentPage = 0;
-int timeData = 0;
+
+unsigned long previousMillis = 0;
+const long interval = 1000; // 每秒更新一次
 
 void setup() {
     // 初始化串口用于调试
@@ -35,10 +37,11 @@ void setup() {
 
     // 显示图片
     displayImageZyq();
-    delay(100);
+    delay(1000);
 
     // 测试样例，用完即删
-    displayImageTest();
+    clearTft();
+    displayInitTest();
 }
 
 
@@ -65,9 +68,9 @@ void loop() {
 //
 //    currentPage = (currentPage + 1) % 4;
 
-    // 测试样例，用完即删
-    clearTft();
-    displayIimeTest(timeData);
-    timeData++;
-    delay(1000);
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis >= interval) {
+        previousMillis = currentMillis;
+        updateClock();
+    }
 }
