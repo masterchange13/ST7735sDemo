@@ -23,10 +23,11 @@
 //Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
 uint8_t currentPage = 0;
+int timeData = 0;
 
 void setup() {
     // 初始化串口用于调试
-    Serial.begin(11200);
+    Serial.begin(115200);
     Serial.println("ST7735S Test");
 
     // 初始化 ST7735S 屏幕
@@ -37,32 +38,36 @@ void setup() {
     delay(100);
 
     // 测试样例，用完即删
-//    displayImageTest();
+    displayImageTest();
 }
 
 
 
 void loop() {
-    // 主循环中可以添加更多的显示内容
-    switch(currentPage){
-        case 0:
-            displayImage0();
-            break;
-        case 1:
-            displayImage1();
-            break;
-        case 2:
-            displayImage2();
-            break;
-        case 3:
-            displayImage3();
-            break;
-        default:
-            break;
-    }
-    Serial.println(currentPage);
+//    // 主循环中可以添加更多的显示内容
+//    switch(currentPage){
+//        case 0:
+//            displayImage0();
+//            break;
+//        case 1:
+//            displayImage1();
+//            break;
+//        case 2:
+//            displayImage2();
+//            break;
+//        case 3:
+//            displayImage3();
+//            break;
+//        default:
+//            break;
+//    }
+//    delay(2000);
+//
+//    currentPage = (currentPage + 1) % 4;
 
-    delay(2000);
-
-    currentPage = (currentPage + 1) % 4;
+    // 测试样例，用完即删
+    clearTft();
+    displayIimeTest(timeData);
+    timeData++;
+    delay(1000);
 }

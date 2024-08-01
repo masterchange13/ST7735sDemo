@@ -69,6 +69,9 @@ void pushImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint16_t *i
     tft.endWrite();
 }
 
+void clearTft(){
+    tft.fillScreen(ST77XX_BLACK);
+}
 
 uint16_t imageSize = 128 * 160;
 void displayImageZyq() {
@@ -89,7 +92,15 @@ void reflashTFT(){
     }
 }
 
+void drawDateWeek(){
+    tft.setTextColor(ST7735_BLUE);
+    tft.setTextSize(2);
+    tft.setCursor(12,0);
+    tft.print("2024-07-28");
+}
+
 void displayImage0(){
+    clearTft();
     // 设置光标到左上角
     tft.setAddrWindow(0, 0, 128, 160);
 
@@ -100,6 +111,7 @@ void displayImage0(){
 }
 
 void displayImage1(){
+    clearTft();
     // 设置光标到左上角
     tft.setAddrWindow(0, 0, 128, 160);
 
@@ -110,6 +122,7 @@ void displayImage1(){
 }
 
 void displayImage2(){
+    clearTft();
     // 设置光标到左上角
     tft.setAddrWindow(0, 0, 128, 160);
 
@@ -117,11 +130,13 @@ void displayImage2(){
     for (uint16_t i = 0; i < imageSize; i++) {
         tft.pushColor(image_page2[i]);
     }
-    pushImage(30, 30, 60, 100, image_page_test);
+    pushImage(0, 0, 60, 100, image_page_test);
+    pushImage(60, 60, 60, 100, image_page_test);
 }
 
 
 void displayImage3(){
+    clearTft();
     // 设置光标到左上角
     tft.setAddrWindow(0, 0, 128, 160);
 
@@ -137,5 +152,9 @@ void displayImageTest(){
     pushImage(30, 30, 60, 100, image_page_test);
 
 
+}
+
+void displayIimeTest(int time){
+    drawDateWeek();
 }
 
