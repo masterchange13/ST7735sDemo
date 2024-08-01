@@ -72,5 +72,7 @@ void loop() {
     if (currentMillis - previousMillis >= interval) {
         previousMillis = currentMillis;
         updateClock();
+        //新的一天
+        updateMain();
     }
 }

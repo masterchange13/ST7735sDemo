@@ -13,6 +13,7 @@ void reflashTFT();
 void drawDateWeek();
 void updateTimeDisplay();
 void updateClock();
+void updateMain();
 
 void displayImage0();
 void displayImage1();

@@ -13,12 +13,12 @@ TimeData networkGetTime();
 int networkTest();
 
 // 注释掉,因为现在用有错误
-//class Network{
-//public:
-//    Network();
-//    void setup();
-//    TimeData getTime();
-//    void test();
-//};
+class Network{
+public:
+    Network();
+    void setup();
+    TimeData getTime();
+    void test();
+};
 
 #endif //ST7735SDEMO_NET_H
