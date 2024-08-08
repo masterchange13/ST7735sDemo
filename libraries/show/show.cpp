@@ -126,7 +126,7 @@ TimeData networkGetTime() {
 // 从自己的服务器获取时间
 TimeData networkGetTimeByServer(){
     HTTPClient http;
-    http.begin("http://100.122.175.207:8080/time");
+    http.begin("http://192.168.2.16:8080/time");
     int httpCode = http.GET();
     if (httpCode == HTTP_CODE_OK) {
 
