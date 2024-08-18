@@ -85,8 +85,8 @@ WeatherData weatherData = {"CZ", "晴", "30", "n 3"};
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-const char *ssid     = "DESKTOP-IJOD4LC 3771";
-const char *password = "r3Z153@1";
+const char *ssid     = "ChinaNet-tQ9gxh";
+const char *password = "88888888";
 
 // 初始化WiFiUDP实例
 WiFiUDP ntpUDP;
@@ -405,6 +405,7 @@ void updateClock() {
 void updateMain(){
     if(timeData.hours == 0 && timeData.minutes == 0 && timeData.seconds == 0){
         reflashTFT();
+        clearTft();
         displayInitTest();
     }
 }
