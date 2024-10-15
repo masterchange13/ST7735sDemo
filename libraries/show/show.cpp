@@ -72,7 +72,7 @@ uint16_t width = 128;
 //    int day;
 //} TimeData;
 // 创建TimeData并初始化
-TimeData timeData = {18, 17, 0, 0 , 0};
+TimeData timeData = {6, 0, 0, 0 , 0};
 
 WeatherData weatherData = {"CZ", "晴", "30", "n 3"};
 
@@ -92,20 +92,29 @@ const char *password = "88888888";
 WiFiUDP ntpUDP;
 
 // 使用中国的NTP服务器，设置时区偏移量为 UTC+8（28800秒），更新间隔为60000毫秒
-NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", 60 * 60 * 8, 60000);    //NTC
+NTPClient timeClient(ntpUDP, "cn.pool.ntp.org", 60 * 60 * 8, 60000);  // 使用中国的NTP服务器
 HTTPClient http;
+
 void networkSetup() {
     WiFi.begin(ssid, password);
+    unsigned long startAttemptTime = millis();  // 记录开始时间
     while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
         Serial.print(".");
+        if (millis() - startAttemptTime > 5000) {  // 如果连接超过5秒
+            Serial.println("WiFi连接超时");
+            break;
+        }
+        delay(500);  // 延迟检查间隔
     }
-    Serial.println("");
-    Serial.println("WiFi connected");
-    Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
-    timeClient.begin();
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("");
+        Serial.println("WiFi connected");
+        Serial.println("IP address: ");
+        Serial.println(WiFi.localIP());
+    }
+    timeClient.begin();  // 开始NTP客户端
 }
+
 
 TimeData networkGetTime() {
     // 确保NTP客户端更新
@@ -143,6 +152,11 @@ TimeData networkGetTimeByServer(){
         timeData.day = doc["day"].as<int>();
     } else {
         Serial.println("HTTP request failed");
+        timeData.hours = 6;
+        timeData.minutes = 0;
+        timeData.seconds = 0;
+        timeData.month = 0;
+        timeData.day = 0;
     }
     http.end();
     return timeData;

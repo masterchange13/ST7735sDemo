@@ -30,7 +30,7 @@ const long interval = 1000; // 每秒更新一次
 void setup() {
     // 初始化串口用于调试
     Serial.begin(115200);
-    Serial.println("ST7735S Test");
+//    Serial.println("ST7735S Test");
 
     // 初始化 ST7735S 屏幕
     initTft();
