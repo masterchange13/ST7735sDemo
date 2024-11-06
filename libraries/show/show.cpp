@@ -100,7 +100,7 @@ void networkSetup() {
     unsigned long startAttemptTime = millis();  // 记录开始时间
     while (WiFi.status() != WL_CONNECTED) {
         Serial.print(".");
-        if (millis() - startAttemptTime > 5000) {  // 如果连接超过5秒
+        if (millis() - startAttemptTime > 50000) {  // 如果连接超过50秒
             Serial.println("WiFi连接超时");
             break;
         }
@@ -135,7 +135,7 @@ TimeData networkGetTime() {
 // 从自己的服务器获取时间
 TimeData networkGetTimeByServer(){
     HTTPClient http;
-    http.begin("http://192.168.2.16:8080/time");
+    http.begin("http://192.168.2.9:8080/time");
     int httpCode = http.GET();
     if (httpCode == HTTP_CODE_OK) {
 
