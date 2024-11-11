@@ -514,6 +514,21 @@ void drawWeatherPage(){
 //    drawWeatherContent();
 }
 
+void mqtt_start(){
+    clearTft();
+    tft.setTextColor(ST7735_WHITE);
+    tft.setTextSize(2);
+    tft.setCursor(0, 0);
+    tft.print("get time ...");
+    tft.fillRect(0, 20, tft.width(), 5, ST7735_WHITE);
+
+    delay(2000);
+
+    clearTft();
+
+    displayInitTest();
+}
+
 
 // OTA
 //固件链接，在巴法云控制台复制、粘贴到这里即可
@@ -595,9 +610,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
     // 处理收到的消息
     if (String(topic) == updateTopic) {
-        if (message == "start") {
+        if (message == "update") {
             Serial.println("Starting OTA update...");
             updateBin(); // 调用 OTA 更新函数
+        }else if( message == "start"){
+            // restart
+            mqtt_start();
         }
     }
 }
