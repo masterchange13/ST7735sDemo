@@ -4,6 +4,11 @@
 //#include "lib/show/show.h"
 #include <show.h>
 #include "libraries/show/show.h"
+#include <WiFi.h>
+//#include "libraries/PubsubClient/src/PubSubClient.h"
+//#include "libraries/BaFa/mqtt.h"
+//#include "libraries/BaFa/ota.h"
+
 
 // ST7735S 屏幕引脚 | ESP32 引脚
 // VCC | 3.3V
@@ -27,10 +32,10 @@ uint8_t currentPage = 0;
 unsigned long previousMillis = 0;
 const long interval = 1000; // 每秒更新一次
 
+bool otaUpdated = false;
+
 void setup() {
-    // 初始化串口用于调试
     Serial.begin(115200);
-//    Serial.println("ST7735S Test");
 
     // 初始化 ST7735S 屏幕
     initTft();
@@ -39,14 +44,26 @@ void setup() {
     displayImageZyq();
     delay(1000);
 
-    // 测试样例，用完即删
+    // 清屏并进行初始化测试
     clearTft();
     displayInitTest();
+
+    // OTA 更新
+//    if (!otaUpdated) {
+//        Serial.println("set OTA");
+//        updateBin();
+//        otaUpdated = true;
+//        Serial.println("OTA success");
+//    }
+
+    // 初始化 MQTT 客户端
+    mqttSetup();
 }
 
-
-
 void loop() {
+    // in order to keep mqtt
+    mqttLoop();
+
 //    // 主循环中可以添加更多的显示内容
 //    switch(currentPage){
 //        case 0:

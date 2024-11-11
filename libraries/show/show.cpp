@@ -84,6 +84,9 @@ WeatherData weatherData = {"CZ", "晴", "30", "n 3"};
 #include <TimeLib.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
+// OTA
+#include <HTTPUpdate.h>
+
 
 const char *ssid     = "ChinaNet-tQ9gxh";
 const char *password = "88888888";
@@ -135,7 +138,7 @@ TimeData networkGetTime() {
 // 从自己的服务器获取时间
 TimeData networkGetTimeByServer(){
     HTTPClient http;
-    http.begin("http://192.168.2.9:8080/time");
+    http.begin("http://192.168.2.8:8080/time");
     int httpCode = http.GET();
     if (httpCode == HTTP_CODE_OK) {
 
@@ -509,4 +512,127 @@ void drawWeatherPage(){
 //    }
 //    // 绘制天气相关内容
 //    drawWeatherContent();
+}
+
+
+// OTA
+//固件链接，在巴法云控制台复制、粘贴到这里即可
+String upUrl = "http://bin.bemfa.com/b/3BcMmEyYzZmZTg5OTdiNDg5ZGExMzhiMjMxYThmODg3ZTc=weatherClockTime.bin";
+
+//当升级开始时，打印日志
+void update_started() {
+    Serial.println("CALLBACK:  HTTP update process started");
+}
+
+//当升级结束时，打印日志
+void update_finished() {
+    Serial.println("CALLBACK:  HTTP update process finished");
+}
+
+//当升级中，打印日志
+void update_progress(int cur, int total) {
+    Serial.printf("CALLBACK:  HTTP update process at %d of %d bytes...\n", cur, total);
+}
+
+//当升级失败时，打印日志
+void update_error(int err) {
+    Serial.printf("CALLBACK:  HTTP update fatal error code %d\n", err);
+}
+/**
+ * 固件升级函数
+ * 在需要升级的地方，加上这个函数即可，例如setup中加的updateBin();
+ * 原理：通过http请求获取远程固件，实现升级
+ */
+void updateBin(){
+    Serial.println("start update");
+    WiFiClient UpdateClient;
+
+    httpUpdate.onStart(update_started);//当升级开始时
+    httpUpdate.onEnd(update_finished);//当升级结束时
+    httpUpdate.onProgress(update_progress);//当升级中
+    httpUpdate.onError(update_error);//当升级失败时
+
+    t_httpUpdate_return ret = httpUpdate.update(UpdateClient, upUrl);
+    switch(ret) {
+        case HTTP_UPDATE_FAILED:      //当升级失败
+            Serial.println("[update] Update failed.");
+            break;
+        case HTTP_UPDATE_NO_UPDATES:  //当无升级
+            Serial.println("[update] Update no Update.");
+            break;
+        case HTTP_UPDATE_OK:         //当升级成功
+            Serial.println("[update] Update ok.");
+            break;
+    }
+}
+
+// mqtt
+//#include "../PubSubClient/src/PubSubClient.h"
+#include <PubSubClient.h>
+
+// 配置 MQTT 信息
+const char* mqtt_server = "bemfa.com"; // MQTT 服务器地址
+uint16_t mqtt_server_port = 9501;      // MQTT 服务器端口
+#define ID_MQTT  "2a2c6fe8997b489da138b231a8f887e7" // MQTT 客户端 ID
+const char* topic = "weatherClockTime"; // 主题名称
+const char* updateTopic = "weatherClockTime"; // OTA 更新主题
+
+WiFiClient MQTTclient; // WiFi 客户端对象
+PubSubClient client(MQTTclient);
+
+// MQTT 消息回调函数
+void callback(char* topic, byte* payload, unsigned int length) {
+    Serial.print("Message received [");
+    Serial.print(topic);
+    Serial.print("]: ");
+
+    // 将 payload 转换为字符串
+    String message;
+    for (unsigned int i = 0; i < length; i++) {
+        message += (char)payload[i];
+    }
+    Serial.println(message);
+
+    // 处理收到的消息
+    if (String(topic) == updateTopic) {
+        if (message == "start") {
+            Serial.println("Starting OTA update...");
+            updateBin(); // 调用 OTA 更新函数
+        }
+    }
+}
+
+// MQTT 重连函数
+void MQTT_reconnect() {
+    // 如果未连接，则尝试重新连接
+    while (!client.connected()) {
+        Serial.print("Attempting MQTT connection...");
+        // 连接 MQTT 服务器
+        if (client.connect(ID_MQTT)) {
+            Serial.println("connected");
+            // 订阅主题
+            client.subscribe(topic);
+            Serial.print("Subscribed to topic: ");
+            Serial.println(topic);
+        } else {
+            Serial.print("failed, rc=");
+            Serial.print(client.state());
+            Serial.println(" try again in 5 seconds");
+            delay(5000);
+        }
+    }
+}
+
+// 初始化 MQTT
+void mqttSetup() {
+    client.setServer(mqtt_server, mqtt_server_port);
+    client.setCallback(callback);
+//    MQTT_reconnect(); // 初次连接
+}
+
+void mqttLoop(){
+    if (!client.connected()) {
+        MQTT_reconnect();
+    }
+    client.loop();
 }

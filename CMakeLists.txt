@@ -7,5 +7,6 @@ include_directories(libraries/show)
 include_directories(libraries/common)
 include_directories(libraries/task)
 include_directories(libraries/tftUtil)
+include_directories(libraries/BaFa)
 
 

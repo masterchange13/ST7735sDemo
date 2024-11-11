@@ -22,4 +22,12 @@ void displayImage3();
 void displayImageTest();
 void displayInitTest();
 
+//OTA
+void updateBin();
+
+// mqtt
+void MQTT_reconnect();
+void mqttSetup();
+void mqttLoop();
+
 #endif //ST7735SDEMO_SHOW_H
