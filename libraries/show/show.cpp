@@ -89,7 +89,7 @@ WeatherData weatherData = {"CZ", "晴", "30", "n 3"};
 
 
 const char *ssid     = "ChinaNet-tQ9gxh";
-const char *password = "88888888";
+const char *password = "58tongcheng";
 
 // 初始化WiFiUDP实例
 WiFiUDP ntpUDP;
@@ -138,7 +138,7 @@ TimeData networkGetTime() {
 // 从自己的服务器获取时间
 TimeData networkGetTimeByServer(){
     HTTPClient http;
-    http.begin("http://192.168.2.8:8080/time");
+    http.begin("http://raspberrypi:8080/time");
     int httpCode = http.GET();
     if (httpCode == HTTP_CODE_OK) {
 
@@ -154,6 +154,8 @@ TimeData networkGetTimeByServer(){
         timeData.month = doc["month"].as<int>();
         timeData.day = doc["day"].as<int>();
     } else {
+        Serial.println("httpCode is : ");
+        Serial.println(httpCode);
         Serial.println("HTTP request failed");
         timeData.hours = 6;
         timeData.minutes = 0;

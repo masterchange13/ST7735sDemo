@@ -30,7 +30,7 @@
 uint8_t currentPage = 0;
 
 unsigned long previousMillis = 0;
-const long interval = 1000; // 每秒更新一次
+long interval = 1000; // 每秒更新一次
 
 bool otaUpdated = false;
 
@@ -58,6 +58,13 @@ void setup() {
 
     // 初始化 MQTT 客户端
     mqttSetup();
+
+    // count update time;
+    int now = millis();
+    updateClock();
+    int update_time = millis() - now;
+    interval = interval - update_time;
+
 }
 
 void loop() {
@@ -90,6 +97,6 @@ void loop() {
         previousMillis = currentMillis;
         updateClock();
         //新的一天
-        updateMain();
+      updateMain();
     }
 }
